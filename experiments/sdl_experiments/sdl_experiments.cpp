@@ -3,6 +3,23 @@
 #define WIDTH 320
 #define HEIGHT 240
 
+#include <windows.h>
+
+int change_frequency(void)
+{
+ DEVMODE d;
+ memset(&d, 0, sizeof d);
+ 
+ d.dmSize = sizeof d;
+ d.dmDisplayFrequency = 75;
+ d.dmFields = DM_DISPLAYFREQUENCY;
+
+ ChangeDisplaySettings(&d, CDS_UPDATEREGISTRY);
+
+ return 0;
+}
+
+
 void checkInput()
 {
 	SDL_Event event;
