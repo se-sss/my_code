@@ -1,8 +1,45 @@
 #include "SDL.h"
 #include <cstdio>
+#include <ctime>
+#include <Windows.h>
+#include <Mmsystem.h>
 #define WIDTH 320
 #define HEIGHT 240
 #include "change_display_frequency.h"
+
+double time_change_ms()
+{
+	/*
+	static clock_t t1 = clock();
+	clock_t t2;
+    t2 = clock();
+	clock_t delta = t2 - t1;
+	t1 = t2;
+    return (int) (delta * 1000 / CLOCKS_PER_SEC);
+	*/
+
+	__int64 pcount;
+	static __int64 startcount;
+	static DWORD starttime;
+	static bool first = true;
+
+	QueryPerformanceCounter ((LARGE_INTEGER *)&pcount);
+	__int64 freq;
+
+	QueryPerformanceFrequency((LARGE_INTEGER *)&freq);
+
+	if (first) 
+	{
+			first = false;
+			startcount = pcount;
+			return 0;
+	}
+
+	double delta = (double) (pcount - startcount);
+	startcount = pcount;
+	return delta / freq;
+
+}
 
 void checkInput()
 {
@@ -109,9 +146,9 @@ int main(int argc, char *argv[])
     printf("  %d x %d\n", modes[i]->w, modes[i]->h);
   }
 
-  change_display_frequency(60);
-  SDL_Delay(10000);
-  change_display_frequency(75);
+//  change_display_frequency(60);
+//  SDL_Delay(10000);
+//  change_display_frequency(75);
 
   SDL_Surface *screen;
   //ChangeDisplaySettings;
@@ -130,8 +167,20 @@ int main(int argc, char *argv[])
   q.y = 20;
   q.dir = true;
 
+
+if(TIMERR_NOERROR == timeBeginPeriod(1))
+{
+	printf("Timer resolution changed\n");
+}
+else
+{
+	printf("Failed to change timer resolution\n");
+}
   while (true)
   {
+    //printf("delta  (ms)=  %f\n", time_change_ms());
+	  printf("%lf\n", time_change_ms());
+
     checkInput();
 
     if (q.dir)
@@ -182,8 +231,10 @@ int main(int argc, char *argv[])
     }
 
     SDL_UpdateRect(screen, 0, 0, screen->w, screen->h);
-    SDL_Delay(10);
+    SDL_Delay(0);
   }
+
+  timeEndPeriod(1);
 
   atexit(SDL_Quit);
 
