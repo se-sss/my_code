@@ -9,6 +9,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "udp_client", "udp_client\ud
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sdl_experiments", "sdl_experiments\sdl_experiments.vcproj", "{7239F76F-925C-4605-B1BF-C0B6EB6EE215}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "runge", "runge\runge.vcproj", "{445CD4D6-3FCB-463C-99BD-1E8CD9C0FD2E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -31,6 +33,10 @@ Global
 		{7239F76F-925C-4605-B1BF-C0B6EB6EE215}.Debug|Win32.Build.0 = Debug|Win32
 		{7239F76F-925C-4605-B1BF-C0B6EB6EE215}.Release|Win32.ActiveCfg = Release|Win32
 		{7239F76F-925C-4605-B1BF-C0B6EB6EE215}.Release|Win32.Build.0 = Release|Win32
+		{445CD4D6-3FCB-463C-99BD-1E8CD9C0FD2E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{445CD4D6-3FCB-463C-99BD-1E8CD9C0FD2E}.Debug|Win32.Build.0 = Debug|Win32
+		{445CD4D6-3FCB-463C-99BD-1E8CD9C0FD2E}.Release|Win32.ActiveCfg = Release|Win32
+		{445CD4D6-3FCB-463C-99BD-1E8CD9C0FD2E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

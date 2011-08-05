@@ -46,7 +46,7 @@ public :
 	friend quaternion<P> operator/(const quaternion<P>& q1, const quaternion<P>& q2);
 
 
-	quaternion():r((T) 0)
+	quaternion():r()
 	{
 	}
 
@@ -56,11 +56,11 @@ public :
 	}
 
 	quaternion(const v3d<T>& vector_part) :
-			r((T) 0), v(vector_part)
+			r(), v(vector_part)
 	{
 	}
 
-	quaternion(const T real_part, const v3d<T>& vector_part) :
+	quaternion(const T& real_part, const v3d<T>& vector_part) :
 			r(real_part), v(vector_part)
 	{
 	}
@@ -69,14 +69,14 @@ public :
 	{
 	}
 
-	quaternion(const T a, const T b, const T c, const T d) :
+	quaternion(const T& a, const T& b, const T& c, const T& d) :
 			 r(a), v(b, c, d)
 	{
 	}
 
 	quaternion& operator=(const quaternion& q)
 	{
-		r = v.r;
+		r = q.r;
 		v = q.v;
 		return *this;
 	}
@@ -95,10 +95,45 @@ public :
 		return *this;
 	}
 
+	template<typename P>
+	quaternion& operator*=(const P& k)
+	{
+		r *= k;
+		v *= k;
+		return *this;
+	}
+
+	template<>
+	quaternion& operator*=(const T& k)
+	{
+		r *= k;
+		v *= k;
+		return *this;
+	}
+
+	template<>
+	quaternion& operator*=(const quaternion& q)
+	{
+		r = r * q.r - (v, q.v);
+		v = r * q.v + q.r * v + v ^ q.v;
+		return *this;
+	}
+
+	template<>
+	quaternion& operator*=(const v3d<T>& q)
+	{
+		r =   - (v, q);
+		v = r * q + v ^ q;
+		return *this;
+	}
+
+
+
 	const quaternion& operator+() const
 	{
 		return *this;
 	}
+
 
 	quaternion operator-() const
 	{
@@ -139,12 +174,22 @@ public :
 		return 1 / *this;
 	}
 
-	T real() const
+	T& real()
 	{
 		return r;
 	}
 
-	v3d<T> vector() const
+	const T& real() const
+	{
+		return r;
+	}
+
+	v3d<T>& vector()
+	{
+		return v;
+	}
+
+	const v3d<T>& vector() const
 	{
 		return v;
 	}
