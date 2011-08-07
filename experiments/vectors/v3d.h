@@ -56,7 +56,7 @@ public:
 	template<typename P>
 	v3d& operator*=(const P& k)
 	{
-		typedef boost::mpl::if_<elements_are_arithmetic,
+		typedef typename boost::mpl::if_<elements_are_arithmetic,
 			T, P>::type cast_type;
 
 		const cast_type k_casted = static_cast<const cast_type>(k);
@@ -108,17 +108,16 @@ public:
 		return (v3d(*this) -= v);
 	}
 
-	T& operator[](int i) 
-	{ 
+	T& operator[](int i)
+	{
 		return data[i];
 	}
 
-	const T& operator[](int i) const 
-	{ 
+	const T& operator[](int i) const
+	{
 		return data[i];
 	}
 
-        
 
 
 	T operator,(const v3d& v) const
@@ -199,7 +198,4 @@ v3d<Q> operator/(const v3d<Q> & v, const P k)
 
 }
 
-
-
 #endif
-

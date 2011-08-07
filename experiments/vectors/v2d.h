@@ -50,7 +50,7 @@ public:
 	template<typename P>
 	v2d& operator*=(const P& k)
 	{
-		typedef boost::mpl::if_<elements_are_arithmetic,
+		typedef typename boost::mpl::if_<elements_are_arithmetic,
 			T, P>::type cast_type;
 
 		const cast_type k_casted = static_cast<cast_type>(k);
@@ -59,7 +59,7 @@ public:
 		return *this;
 	}
 
-	template<>
+	//template<>
 	v2d& operator*=(const T& k)
 	{
 		data[0] *= k;
@@ -95,13 +95,13 @@ public:
 		return (v2d(*this) -= v);
 	}
 
-	T& operator[](int i) 
-	{ 
+	T& operator[](int i)
+	{
 		return data[i];
 	}
 
-	const T& operator[](int i) const 
-	{ 
+	const T& operator[](int i) const
+	{
 		return data[i];
 	}
 

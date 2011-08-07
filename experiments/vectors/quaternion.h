@@ -103,7 +103,7 @@ public :
 		return *this;
 	}
 
-	template<>
+//	template<>
 	quaternion& operator*=(const T& k)
 	{
 		r *= k;
@@ -111,7 +111,7 @@ public :
 		return *this;
 	}
 
-	template<>
+//	template<>
 	quaternion& operator*=(const quaternion& q)
 	{
 		r = r * q.r - (v, q.v);
@@ -119,7 +119,7 @@ public :
 		return *this;
 	}
 
-	template<>
+//	template<>
 	quaternion& operator*=(const v3d<T>& q)
 	{
 		r =   - (v, q);
@@ -204,7 +204,7 @@ quaternion<Q> operator*(const P k, const quaternion<Q> & q)
 template<typename P, typename Q>
 quaternion<Q> operator*(const quaternion<Q> & q, const P k)
 {
-		return quaternion<Q>((Q) k * this->r, this->v * k);
+		return quaternion<Q>((Q) k * q.r, q.v * k);
 }
 
 template<typename P>

@@ -47,9 +47,13 @@ int main(int argc, char* argv[])
 
 
 	v3d<boost::math::quaternion<float> > v5;
-//	v5 *= 2.5;
+	v5 *= 2.5;
 	v5 *= 2.f;
-	
+
+	v3d<std::complex<float> > v6;
+	v6 *= 2.5;
+	v6 *= 2.f;
+
 
 //	RNG::state_t data;
 //	RNG r(data, gf, 0);
