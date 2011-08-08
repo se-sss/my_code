@@ -20,11 +20,11 @@ public:
 		data[0] = data[1] = T();
 	}
 
-	explicit v2d(const v2d& v)
-	{
-		data[0] = v.data[0];
-		data[1] = v.data[1];
-	}
+//	v2d(const v2d& v)
+//	{
+//		data[0] = v.data[0];
+//		data[1] = v.data[1];
+//	}
 
 
 	v2d(const T& a, const T& b)
@@ -33,12 +33,12 @@ public:
 		data[1] = b;
 	}
 
-	v2d& operator=(const v2d& v)
-	{
-		data[0] = v.data[0];
-		data[1] = v.data[1];
-		return *this;
-	}
+//	v2d& operator=(const v2d& v)
+//	{
+//		data[0] = v.data[0];
+//		data[1] = v.data[1];
+//		return *this;
+//	}
 
 	v2d& operator+=(const v2d& v)
 	{
