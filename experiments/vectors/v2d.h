@@ -15,6 +15,8 @@ class v2d
 	boost::array<T, 2> data;
 
 public:
+	typedef T value_type;
+
 	v2d()
 	{
 		data[0] = data[1] = T();

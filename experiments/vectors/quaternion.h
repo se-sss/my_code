@@ -13,7 +13,7 @@ private:
 
 public :
 
-
+	typedef T value_type;
 
 	template<typename P, typename Q>
 	friend quaternion<Q> operator*(const P k, const quaternion<Q> & q);

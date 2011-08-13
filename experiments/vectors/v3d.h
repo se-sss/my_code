@@ -10,10 +10,11 @@ template <typename T>
 class v3d
 {
 	private:
-	typedef typename boost::is_arithmetic<T>::type elements_are_arithmetic;
 	boost::array<T, 3> data;
 
 public:
+	typedef T value_type;
+
 	v3d()
 	{
 		data.assign(T());
@@ -59,16 +60,37 @@ public:
 	template<typename P>
 	v3d& operator*=(const P& k)
 	{
-		typedef typename boost::mpl::if_<elements_are_arithmetic,
-			T, P>::type cast_type;
+		data[0] *= k;
+		data[1] *= k;
+		data[2] *= k;
+		return *this;
+	}
 
-		const cast_type k_casted = static_cast<const cast_type>(k);
+	template<>
+	v3d& operator*=(const float& k)
+	{
+		T k_casted = static_cast<T>(k);
 
 		data[0] *= k_casted;
 		data[1] *= k_casted;
 		data[2] *= k_casted;
 		return *this;
 	}
+
+	template<>
+	v3d& operator*=(const double& k)
+	{
+		T k_casted = static_cast<T>(k);
+
+		data[0] *= k_casted;
+		data[1] *= k_casted;
+		data[2] *= k_casted;
+		return *this;
+	}
+
+
+
+
 
 //	template<>
 	v3d& operator*=(const T& k)
