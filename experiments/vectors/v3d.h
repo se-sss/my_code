@@ -5,6 +5,7 @@
 #include <boost/type_traits/is_arithmetic.hpp>
 #include <boost/mpl/if.hpp>
 
+#include "find_end_type.h"
 
 template <typename T>
 class v3d
@@ -14,6 +15,7 @@ class v3d
 
 public:
 	typedef T value_type;
+	typedef typename find_end_type<T>::value_type end_type;
 
 	v3d()
 	{
@@ -60,40 +62,15 @@ public:
 	template<typename P>
 	v3d& operator*=(const P& k)
 	{
-		data[0] *= k;
-		data[1] *= k;
-		data[2] *= k;
-		return *this;
-	}
 
-	template<>
-	v3d& operator*=(const float& k)
-	{
-		T k_casted = static_cast<T>(k);
-
+		const end_type k_casted = static_cast<end_type>(k);
 		data[0] *= k_casted;
 		data[1] *= k_casted;
 		data[2] *= k_casted;
 		return *this;
 	}
 
-	template<>
-	v3d& operator*=(const double& k)
-	{
-		T k_casted = static_cast<T>(k);
-
-		data[0] *= k_casted;
-		data[1] *= k_casted;
-		data[2] *= k_casted;
-		return *this;
-	}
-
-
-
-
-
-//	template<>
-	v3d& operator*=(const T& k)
+	v3d& operator*=(const end_type& k)
 	{
 		data[0] *= k;
 		data[1] *= k;

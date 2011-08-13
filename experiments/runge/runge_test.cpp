@@ -15,23 +15,12 @@ void gf(const RNG::time_t t, const RNG::state_t& v, RNG::state_t& result)
 {
 	return;
 }
-template<typename A, typename B>
-class S
-{
-public:
-	A f(B b)
-	{
-		typedef boost::mpl::if_<boost::is_same<B, float>, B, float>::type to_type;
-
-		return to_type(b);
-	}
-};
 
 int main(int argc, char* argv[])
 {
-//	RNG::state_t data;
-//	RNG r(data, gf, 0);
-//	r.update(0.1f);
+	RNG::state_t data;
+	RNG r(data, gf, 0);
+	r.update(0.1f);
 
 	return 0;
 }

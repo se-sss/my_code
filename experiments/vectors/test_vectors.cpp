@@ -8,6 +8,7 @@
 #include <complex>
 //#include "tensor.h"
 
+#include <boost/numeric/ublas/vector.hpp>
 #include "TwoStateValue.h"
 
 int main(int argc, char* argv[])
@@ -45,6 +46,15 @@ int main(int argc, char* argv[])
 
 	 
 	v6 = v6;
+	
+/*
+	boost::numeric::ublas::vector<double> v7(3);
+
+	boost::numeric::ublas::vector<boost::math::quaternion<std::complex<float> > > v8(3);
+	v8 *= 2.f;
+
+	boost::numeric::ublas::vector<long double> v9(3);
+*/
 
 
 
