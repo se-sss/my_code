@@ -8,13 +8,13 @@ class Runge4
 {
 public:
 	typedef boost::function<void (const T dt, const STATE& v, STATE& result)> f_t;
-	typedef STATE state_t;	
+	typedef STATE state_t;
 	typedef T time_t;
 private:
 	state_t& v;
 	f_t f;
 	time_t t;
-		
+
 public:
 
 	Runge4(state_t& data_vector, f_t func, time_t t0):
@@ -35,9 +35,15 @@ public:
 		time_t next = t + dt;
 
 		f(t, v, k1);
-		f(half, v + half_step * k1, k2);
-		f(half, v + half_step * k2, k3);
-		f(next, v + dt * k3, k4);
+
+		state_t tmp1 = (v + half_step * k1);
+		f(half, tmp1, k2);
+
+		const state_t tmp2(v + half_step * k2);
+		f(half, tmp2, k3);
+
+		const state_t tmp3(v + dt * k3);
+		f(next, tmp3, k4);
 
 		v += time_t((1./6.) * dt) * (k1 + 2 * k2 + 2 * k3 + k4);
         t = next;

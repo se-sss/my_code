@@ -15,9 +15,14 @@ namespace se
       {
       }
 
-      v3d(const v3d& v)
+      v3d(const v3d& v):vec<T, 3>(v)
       {
       }
+
+      v3d(const vec<T, 3>& v):vec<T, 3>(v)
+      {
+      }
+
 
 
       v3d(const T & a, const T & b, const T & c)

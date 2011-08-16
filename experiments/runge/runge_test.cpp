@@ -29,7 +29,7 @@ int main(int argc, char* argv[])
 
 	RNG::state_t data;
 	RNG r(data, gf, 0);
-	r.update(0.1f);
+	r.update(0.1);
 
 	return 0;
 }

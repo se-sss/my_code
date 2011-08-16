@@ -142,7 +142,7 @@ namespace se
 
       T operator, (const vec & v) const
       {
-        T t();
+        T t = T(); //T t(); - func prototype
         for (std::size_t i = 0; i < N; ++i)
         {
           t += data[i] * v.data[i];
@@ -160,7 +160,7 @@ namespace se
       {
         const double inv_length = 1. / sqrt(this->square_length());
 
-        *this *= inv_length;
+        return *this *= inv_length;
       }
 
       static vec get_normalized(const vec & v)

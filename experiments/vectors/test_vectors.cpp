@@ -32,6 +32,8 @@ void test1()
 	v1 = v1*2.;
 	v1 /= 5.L;
 	v1 = (v1 / 5.) + v1;
+
+	v1.normalize();
 }
 
 void test2()
