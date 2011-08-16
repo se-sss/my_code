@@ -24,7 +24,7 @@ namespace se
 
       vec & operator+=(const vec & v)
       {
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] += v.data[i];
         }
@@ -33,7 +33,7 @@ namespace se
 
       vec & operator-=(const vec & v)
       {
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] -= v.data[i];
         }
@@ -43,7 +43,7 @@ namespace se
       template < typename P > vec & operator*=(const P & k)
       {
         const end_type k_casted = static_cast < end_type > (k);
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] *= k_casted;
         }
@@ -54,7 +54,7 @@ namespace se
         template < typename > class CLASS > vec & operator*=(const CLASS < P >
                                                              &k)
       {
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] *= k;
         }
@@ -63,7 +63,7 @@ namespace se
 
       vec & operator*=(const end_type & k)
       {
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] *= k;
         }
@@ -75,7 +75,7 @@ namespace se
         const end_type k_inv =
           static_cast < end_type > (1) / static_cast < end_type > (k);
 
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] *= k_inv;
         }
@@ -86,7 +86,7 @@ namespace se
         template < typename > class CLASS > vec & operator/=(const CLASS < P >
                                                              &k)
       {
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] /= k;
         }
@@ -97,7 +97,7 @@ namespace se
       {
         end_type k_inv = static_cast < end_type > (1) / k;
 
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           data[i] *= k_inv;
         }
@@ -112,7 +112,7 @@ namespace se
       vec operator-() const
       {
         vec r = *this;
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           r.data[i] = r.data[i];
         }
@@ -143,7 +143,7 @@ namespace se
       T operator, (const vec & v) const
       {
         T t();
-        for (int i = 0; i < N; ++i)
+        for (std::size_t i = 0; i < N; ++i)
         {
           t += data[i] * v.data[i];
         }
