@@ -184,7 +184,7 @@ namespace se
     };
 
     template < typename P, typename Q, std::size_t N >
-      vec < Q, N > operator*(const P k, const vec < Q, N > &v)
+      vec < Q, N > operator*(const P & k, const vec < Q, N > &v)
     {
       vec < Q, N > r = v;
       v *= k;

@@ -3,8 +3,8 @@
 
 //#include "v2d.h"
 //#include "v3d.h"
-//#include <boost/math/quaternion.hpp>
-//#include "quaternion.h"
+#include <boost/math/quaternion.hpp>
+#include <se/geometry/quaternion.h>
 //#include <complex>
 //#include "tensor.h"
 
@@ -48,10 +48,27 @@ void test2()
 	v1 / std::complex<float>(1, 2);
 }
 
+
+template <typename T>
+void test3()
+{
+	vec<T, 5> v1;
+
+	v1 / 3.;
+
+	v1 *= 3.L;
+	v1 * 3.L;
+
+	v1 /= 1;
+	v1 / 3.;
+}
+
 int main(int argc, char* argv[])
 {
 	test1();
 	test2();
+
+	test3<boost::math::quaternion<float> >();
 	return 0;
 }
 
