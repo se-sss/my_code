@@ -173,8 +173,8 @@ namespace se
         return vec(*this) *= k;
       }
 
-      template < typename P, typename Q, std::size_t N >
-        friend vec < Q, N > operator*(const P & k, const vec < Q, N > &v);
+      template < typename P, typename Q, std::size_t L >
+        friend vec < Q, L > operator*(const P & k, const vec < Q, L > &v);
 
       template < typename P > vec operator/(const P & k) const
       {
@@ -183,12 +183,10 @@ namespace se
 
     };
 
-    template < typename P, typename Q, std::size_t N >
-      vec < Q, N > operator*(const P & k, const vec < Q, N > &v)
+    template <typename P, typename Q, std::size_t L >
+      vec < Q, L > operator*(const P & k, const vec < Q, L > &v)
     {
-      vec < Q, N > r = v;
-      v *= k;
-      return r;
+       return vec<Q, L>(v) *= k;
     }
   }
 }

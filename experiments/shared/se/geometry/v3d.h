@@ -11,22 +11,27 @@ namespace se
     template < typename T > class v3d : public vec<T, 3>
     {
     public:
-      v3d():vec()
+      v3d()
       {
       }
 
+      v3d(const v3d& v)
+      {
+      }
+
+
       v3d(const T & a, const T & b, const T & c)
       {
-        data[0] = a;
-        data[1] = b;
-        data[2] = c;
+        (*this)[0] = a;
+        (*this)[1] = b;
+        (*this)[2] = c;
       }
 
       v3d operator^(const v3d & v) const
       {
-        const T a = this->data[1] * v.data[2] - this->data[2] * v.data[1];
-        const T b = this->data[2] * v.data[0] - this->data[0] * v.data[2];
-        const T c = this->data[0] * v.data[1] - this->data[1] * v.data[0];
+        const T a = (*this)[1] * v[2] - (*this)[2] * v[1];
+        const T b = (*this)[2] * v[0] - (*this)[0] * v[2];
+        const T c = (*this)[0] * v[1] - (*this)[1] * v[0];
 
           return v3d < T > (a, b, c);
       }
