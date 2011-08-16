@@ -12,10 +12,12 @@
 //#include "TwoStateValue.h"
 
 #include <se/geometry/vec.h>
+#include <complex>
 
-int main(int argc, char* argv[])
+using namespace se::geometry;
+
+void test1()
 {
-	using namespace se::geometry;
 	vec<float, 4> v1;
 	vec<long double, 4> v2;
 	vec<float, 4> v3 = v1;
@@ -28,10 +30,28 @@ int main(int argc, char* argv[])
 	v1*=1.;
 
 	v1 = v1*2.;
+	v1 /= 5.L;
+	v1 = (v1 / 5.) + v1;
+}
 
+void test2()
+{
+	vec<std::complex<float>, 4> v1;
+	v1[1] = std::complex<float>(1, 2);
 
+	v1 / 3.;
 
+	v1 *= std::complex<float>(1, 2);
+	v1 * std::complex<float>(1, 2);
 
+	v1 /= std::complex<float>(1, 2);
+	v1 / std::complex<float>(1, 2);
+}
+
+int main(int argc, char* argv[])
+{
+	test1();
+	test2();
 	return 0;
 }
 
