@@ -14,6 +14,8 @@ private:
 	state_t& v;
 	f_t f;
 	time_t t;
+	Runge4(Runge4&);//no copy constructor
+	Runge4& operator=(const Runge4&); //no assignment
 
 public:
 
