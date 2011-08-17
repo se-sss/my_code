@@ -168,6 +168,12 @@ namespace se
         return (vec(v)).normalize();
       }
 
+      vec get_normalized() const
+      {
+        return (vec(*this)).normalize();
+      }
+
+
       template < typename P > vec operator*(const P k) const
       {
         return vec(*this) *= k;
