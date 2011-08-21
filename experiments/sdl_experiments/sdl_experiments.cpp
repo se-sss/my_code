@@ -5,7 +5,9 @@
 #include <Mmsystem.h>
 #define WIDTH 320
 #define HEIGHT 240
-#include "change_display_frequency.h"
+#include <se/utils/change_display_frequency.h>
+
+#include "satellite.h"
 
 double time_change_ms()
 {
@@ -80,7 +82,10 @@ void checkInput()
 
 void drawPixel(SDL_Surface * screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 {
-  Uint32 color = SDL_MapRGB(screen->format, r, g, b);
+	if(x < 0 || x > screen->w - 1 ||
+		y < 0 || y > screen->h - 1) return; 
+
+	Uint32 color = SDL_MapRGB(screen->format, r, g, b);
 
   if (screen->format->palette || screen->format->BitsPerPixel == 8)
   {
@@ -162,12 +167,6 @@ int main(int argc, char *argv[])
     exit(1);
   }
 
-  obj q;
-  q.x = 10;
-  q.y = 20;
-  q.dir = true;
-
-
 if(TIMERR_NOERROR == timeBeginPeriod(1))
 {
 	printf("Timer resolution changed\n");
@@ -176,31 +175,17 @@ else
 {
 	printf("Failed to change timer resolution\n");
 }
+
+Satellite satellite;
   while (true)
   {
     //printf("delta  (ms)=  %f\n", time_change_ms());
-	  printf("%lf\n", time_change_ms());
+    double dt = time_change_ms();
+    printf("%lf\n", dt);
 
     checkInput();
 
-    if (q.dir)
-    {
-      q.x++;
-      if (q.x >= screen->w)
-      {
-        q.dir = !q.dir;
-      }
-
-    }
-    else
-    {
-      q.x--;
-      if (q.x < 0)
-      {
-        q.dir = !q.dir;
-      }
-    }
-
+	satellite.update(dt);
     /* Lock the screen for direct access to the pixels */
     if (SDL_MUSTLOCK(screen))
     {
@@ -214,16 +199,15 @@ else
     memset(screen->pixels, 0,
            screen->format->BytesPerPixel * screen->w * screen->h);
 
-    for (int x = 0; x < screen->w; ++x)
-    {
-      int y = x * x / 100;
-      if (y >= screen->h)
-        break;
 
-      drawPixel(screen, x, y, 220, 0, 0);
-    }
+		const Satellite::state_t& state = satellite.get_state();
+		int x = (int) state[0][0];
+		int y = (int) state[0][1];
+		x += screen->w / 2;
+		y += screen->h / 2;
+		drawPixel(screen, screen->w / 2, screen->h / 2, 0, 255, 0);
 
-    drawPixel(screen, q.x, q.y, 0, 255, 0);
+	drawPixel(screen, x, y, 255, 255, 0);
 
     if (SDL_MUSTLOCK(screen))
     {

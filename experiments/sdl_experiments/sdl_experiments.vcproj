@@ -41,6 +41,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
+				AdditionalIncludeDirectories="$(SolutionDir)\shared\"
 				PreprocessorDefinitions="WIN32;_DEBUG;_CONSOLE"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -173,7 +174,7 @@
 			UniqueIdentifier="{4FC737F1-C7A5-4376-A066-2A32D752A2FF}"
 			>
 			<File
-				RelativePath=".\change_display_frequency.c"
+				RelativePath="..\shared\se\utils\change_display_frequency.c"
 				>
 			</File>
 			<File
@@ -188,6 +189,10 @@
 			>
 			<File
 				RelativePath=".\change_display_frequency.h"
+				>
+			</File>
+			<File
+				RelativePath=".\satellite.h"
 				>
 			</File>
 		</Filter>
