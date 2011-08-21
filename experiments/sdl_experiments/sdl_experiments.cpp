@@ -6,41 +6,15 @@
 #define WIDTH 320
 #define HEIGHT 240
 #include <se/utils/change_display_frequency.h>
+#include <se/utils/timer.h>
 
 #include "satellite.h"
 
 double time_change_ms()
 {
-	/*
-	static clock_t t1 = clock();
-	clock_t t2;
-    t2 = clock();
-	clock_t delta = t2 - t1;
-	t1 = t2;
-    return (int) (delta * 1000 / CLOCKS_PER_SEC);
-	*/
-
-	__int64 pcount;
-	static __int64 startcount;
-	static DWORD starttime;
-	static bool first = true;
-
-	QueryPerformanceCounter ((LARGE_INTEGER *)&pcount);
-	__int64 freq;
-
-	QueryPerformanceFrequency((LARGE_INTEGER *)&freq);
-
-	if (first) 
-	{
-			first = false;
-			startcount = pcount;
-			return 0;
-	}
-
-	double delta = (double) (pcount - startcount);
-	startcount = pcount;
-	return delta / freq;
-
+	static se::utils::timer<double, se::utils::timer_implementations::win_hires> timer;
+	
+	return timer.dt();
 }
 
 void checkInput()
@@ -128,12 +102,6 @@ void drawPixel(SDL_Surface * screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
   }
 
 }
-
-struct obj
-{
-  int x, y;
-  bool dir;
-};
 
 int main(int argc, char *argv[])
 {
