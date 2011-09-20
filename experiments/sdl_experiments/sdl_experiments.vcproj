@@ -116,6 +116,7 @@
 				Name="VCCLCompilerTool"
 				Optimization="2"
 				EnableIntrinsicFunctions="true"
+				AdditionalIncludeDirectories="$(SolutionDir)\shared\"
 				PreprocessorDefinitions="WIN32;NDEBUG;_CONSOLE"
 				RuntimeLibrary="2"
 				EnableFunctionLevelLinking="true"
@@ -134,7 +135,7 @@
 			/>
 			<Tool
 				Name="VCLinkerTool"
-				AdditionalDependencies="SDL.lib SDLmain.lib"
+				AdditionalDependencies="SDL.lib SDLmain.lib winmm.lib"
 				LinkIncremental="1"
 				GenerateDebugInformation="true"
 				SubSystem="1"
@@ -179,6 +180,10 @@
 			</File>
 			<File
 				RelativePath=".\sdl_experiments.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\shared\se\utils\win_hires_timer_init.c"
 				>
 			</File>
 		</Filter>

@@ -1,14 +1,15 @@
 #include "SDL.h"
 #include <cstdio>
 #include <ctime>
-#include <Windows.h>
-#include <Mmsystem.h>
 #define WIDTH 320
 #define HEIGHT 240
 #include <se/utils/change_display_frequency.h>
 #include <se/utils/timer.h>
+#include <boost/chrono.hpp>
+#include <se/utils/win_hires_timer_init.h>
 
 #include "satellite.h"
+
 
 double time_change_ms()
 {
@@ -105,6 +106,10 @@ void drawPixel(SDL_Surface * screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 
 int main(int argc, char *argv[])
 {
+	using namespace boost::chrono;
+
+	init_hires_timer();
+
   if (SDL_Init(SDL_INIT_VIDEO) < 0)
   {
     fprintf(stderr, "Cannot init SDL: %s\n", SDL_GetError());
@@ -124,18 +129,24 @@ int main(int argc, char *argv[])
 //  change_display_frequency(75);
 
   SDL_Surface *screen;
-  //ChangeDisplaySettings;
+//ChangeDisplaySettings;
 
-  screen =
-    SDL_SetVideoMode(WIDTH, HEIGHT, 24,
-                     SDL_SWSURFACE | SDL_DOUBLEBUF /*|SDL_FULLSCREEN */ );
-  if (screen == NULL)
-  {                             // ≈сли установить разрешение не удалось
-    fprintf(stderr, "%s\n", SDL_GetError());
-    exit(1);
-  }
+ screen =
+   SDL_SetVideoMode(WIDTH, HEIGHT, 24,
+                    SDL_SWSURFACE | SDL_DOUBLEBUF /*|SDL_FULLSCREEN */ );
+ if (screen == NULL)
+ {                             // ≈сли установить разрешение не удалось
+   fprintf(stderr, "%s\n", SDL_GetError());
+   exit(1);
+ }
 
-if(TIMERR_NOERROR == timeBeginPeriod(1))
+  TIMECAPS time_caps;
+  timeGetDevCaps(&time_caps, sizeof(time_caps));
+
+  std::cout<<"Min res="<<time_caps.wPeriodMin<<"   Max res="<<time_caps.wPeriodMax<<std::endl;
+  
+const int media_timer_res = 1000;
+if(TIMERR_NOERROR == timeBeginPeriod(media_timer_res))
 {
 	printf("Timer resolution changed\n");
 }
@@ -144,12 +155,26 @@ else
 	printf("Failed to change timer resolution\n");
 }
 
+
 Satellite satellite;
-  while (true)
+
+high_resolution_clock::time_point start = high_resolution_clock::now();
+int i = 0;
+  while (++i < 1000)
   {
     //printf("delta  (ms)=  %f\n", time_change_ms());
     double dt = time_change_ms();
     printf("%lf\n", dt);
+
+			high_resolution_clock::time_point stop = high_resolution_clock::now();
+		high_resolution_clock::duration elapsed = stop - start;
+		start = stop;
+
+		if(nanoseconds(elapsed).count() > 0)
+		{
+			std::cout<<nanoseconds(elapsed)<<std::endl;
+		}
+
 
     checkInput();
 
@@ -183,10 +208,10 @@ Satellite satellite;
     }
 
     SDL_UpdateRect(screen, 0, 0, screen->w, screen->h);
-    SDL_Delay(0);
+    SDL_Delay(1);
   }
 
-  timeEndPeriod(1);
+  timeEndPeriod(media_timer_res);
 
   atexit(SDL_Quit);
 

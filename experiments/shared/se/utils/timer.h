@@ -2,6 +2,7 @@
 #define TIMER_H_INCLUDED
 
 #include <ctime>
+#include <iostream>
 
 #ifdef WIN32
 #include <Windows.h>
@@ -41,6 +42,7 @@ namespace se
       {
         if (t == (clock_t) (-1))        //timer unavailable
         {
+           std::cout << "timer unavailable" << std::endl;
         }
       }
       FLOAT dt()
