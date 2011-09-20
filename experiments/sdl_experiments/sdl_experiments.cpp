@@ -140,21 +140,8 @@ int main(int argc, char *argv[])
    exit(1);
  }
 
-  TIMECAPS time_caps;
-  timeGetDevCaps(&time_caps, sizeof(time_caps));
-
-  std::cout<<"Min res="<<time_caps.wPeriodMin<<"   Max res="<<time_caps.wPeriodMax<<std::endl;
-  
-const int media_timer_res = 1000;
-if(TIMERR_NOERROR == timeBeginPeriod(media_timer_res))
-{
-	printf("Timer resolution changed\n");
-}
-else
-{
-	printf("Failed to change timer resolution\n");
-}
-
+print_device_caps();
+init_hires_timer();
 
 Satellite satellite;
 
@@ -210,8 +197,6 @@ int i = 0;
     SDL_UpdateRect(screen, 0, 0, screen->w, screen->h);
     SDL_Delay(1);
   }
-
-  timeEndPeriod(media_timer_res);
 
   atexit(SDL_Quit);
 

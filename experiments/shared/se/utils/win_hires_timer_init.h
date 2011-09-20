@@ -6,7 +6,8 @@ extern "C"
 {
 #endif
 
-void init_hires_timer();
+void init_hires_timer(void);
+void print_device_caps(void);
 
 #ifdef __cplusplus
 }
