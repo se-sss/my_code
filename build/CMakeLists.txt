@@ -5,6 +5,7 @@ set (PROJECT test_vectors)
 project (${PROJECT}) 
 
 find_package( Boost REQUIRED )
+include_directories (${Boost_INCLUDE_DIRS})
 
 find_package(SDL REQUIRED)
 
@@ -16,7 +17,7 @@ else()
 endif()
 
 
-include_directories (${Boost_INCLUDE_DIRS} ../experiments/shared)
+include_directories (../experiments/shared)
 
 if (MSVC)
 	add_definitions (-D_SCL_SECURE_NO_WARNINGS)
