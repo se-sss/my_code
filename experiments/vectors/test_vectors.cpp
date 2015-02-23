@@ -5,10 +5,10 @@
 //#include "v3d.h"
 #include <boost/math/quaternion.hpp>
 #include <se/geometry/quaternion.h>
-//#include <complex>
+#include <complex>
 //#include "tensor.h"
 
-//#include <boost/numeric/ublas/vector.hpp>
+#include <boost/numeric/ublas/vector.hpp>
 //#include "TwoStateValue.h"
 
 #include <se/geometry/vec.h>
