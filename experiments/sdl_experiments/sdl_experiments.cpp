@@ -10,12 +10,12 @@
 
 #include "satellite.h"
 
-
 double time_change_ms()
 {
-	static se::utils::timer<double, se::utils::timer_implementations::win_hires> timer;
-	
-	return timer.dt();
+  static se::utils::timer < double,
+    se::utils::timer_implementations::win_hires > timer;
+
+  return timer.dt();
 }
 
 void checkInput()
@@ -57,10 +57,10 @@ void checkInput()
 
 void drawPixel(SDL_Surface * screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 {
-	if(x < 0 || x > screen->w - 1 ||
-		y < 0 || y > screen->h - 1) return; 
+  if (x < 0 || x > screen->w - 1 || y < 0 || y > screen->h - 1)
+    return;
 
-	Uint32 color = SDL_MapRGB(screen->format, r, g, b);
+  Uint32 color = SDL_MapRGB(screen->format, r, g, b);
 
   if (screen->format->palette || screen->format->BitsPerPixel == 8)
   {
@@ -106,9 +106,9 @@ void drawPixel(SDL_Surface * screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
 
 int main(int argc, char *argv[])
 {
-	using namespace boost::chrono;
+  using namespace boost::chrono;
 
-	init_hires_timer();
+  init_hires_timer();
 
   if (SDL_Init(SDL_INIT_VIDEO) < 0)
   {
@@ -131,41 +131,77 @@ int main(int argc, char *argv[])
   SDL_Surface *screen;
 //ChangeDisplaySettings;
 
- screen =
-   SDL_SetVideoMode(WIDTH, HEIGHT, 24,
-                    SDL_SWSURFACE | SDL_DOUBLEBUF /*|SDL_FULLSCREEN */ );
- if (screen == NULL)
- {                             // ≈сли установить разрешение не удалось
-   fprintf(stderr, "%s\n", SDL_GetError());
-   exit(1);
- }
+  screen = SDL_SetVideoMode(WIDTH, HEIGHT, 24,
+                     SDL_SWSURFACE | SDL_DOUBLEBUF /*|SDL_FULLSCREEN */ );
+  if (screen == NULL)
+  {                             // ≈сли установить разрешение не удалось
+    fprintf(stderr, "%s\n", SDL_GetError());
+    exit(1);
+  }
 
-print_device_caps();
-init_hires_timer();
+  print_device_caps();
+  init_hires_timer();
 
-Satellite satellite;
+  {                             //FUGURES
+    int R = min(screen->w, screen->h) / 2;
+    int xC = screen->w / 2;
+    int yC = screen->h / 2;
+    for (int i = 1; i < 10; ++i)
+      for (int j = 1; j < 10; ++j)
+      {
 
-high_resolution_clock::time_point start = high_resolution_clock::now();
-int i = 0;
+        memset(screen->pixels, 0,
+               screen->format->BytesPerPixel * screen->w * screen->h);
+
+        for (double fi = 0.; fi <= 2 * 3.141593; fi += 0.001)
+        {
+          double x = sin(i * fi);
+          double y = cos(j * fi);
+
+          double r = sqrt(x * x + y * y);
+          if (r > 1.)
+            r = 1.;
+          if (r < 0.)
+            r = 0.;
+          int colorRed = (int) (255. * (r));
+          int colorBlue = (int) (255. * (1. - r));
+          drawPixel(screen, xC + (int) (x * R), yC + (int) (y * R), colorRed,
+                    0, colorBlue);
+        }
+
+        if (SDL_MUSTLOCK(screen))
+        {
+          SDL_UnlockSurface(screen);
+        }
+
+        SDL_UpdateRect(screen, 0, 0, screen->w, screen->h);
+        SDL_Delay(250);
+
+      }
+  }
+
+  Satellite satellite;
+
+  high_resolution_clock::time_point start = high_resolution_clock::now();
+  int i = 0;
   while (++i < 1000)
   {
     //printf("delta  (ms)=  %f\n", time_change_ms());
     double dt = time_change_ms();
     printf("%lf\n", dt);
 
-			high_resolution_clock::time_point stop = high_resolution_clock::now();
-		high_resolution_clock::duration elapsed = stop - start;
-		start = stop;
+    high_resolution_clock::time_point stop = high_resolution_clock::now();
+    high_resolution_clock::duration elapsed = stop - start;
+    start = stop;
 
-		if(nanoseconds(elapsed).count() > 0)
-		{
-			std::cout<<nanoseconds(elapsed)<<std::endl;
-		}
-
+    if (nanoseconds(elapsed).count() > 0)
+    {
+      std::cout << nanoseconds(elapsed) << std::endl;
+    }
 
     checkInput();
 
-	satellite.update(dt);
+    satellite.update(dt);
     /* Lock the screen for direct access to the pixels */
     if (SDL_MUSTLOCK(screen))
     {
@@ -179,15 +215,14 @@ int i = 0;
     memset(screen->pixels, 0,
            screen->format->BytesPerPixel * screen->w * screen->h);
 
+    const Satellite::state_t & state = satellite.get_state();
+    int x = (int) state[0][0];
+    int y = (int) state[0][1];
+    x += screen->w / 2;
+    y += screen->h / 2;
+    drawPixel(screen, screen->w / 2, screen->h / 2, 0, 255, 0);
 
-		const Satellite::state_t& state = satellite.get_state();
-		int x = (int) state[0][0];
-		int y = (int) state[0][1];
-		x += screen->w / 2;
-		y += screen->h / 2;
-		drawPixel(screen, screen->w / 2, screen->h / 2, 0, 255, 0);
-
-	drawPixel(screen, x, y, 255, 255, 0);
+    drawPixel(screen, x, y, 255, 255, 0);
 
     if (SDL_MUSTLOCK(screen))
     {
