@@ -26,4 +26,9 @@ endif ()
 set (SOURCES
 	../placeholder.cpp)
 
+
 add_executable (${PROJECT} ${HEADERS} ${SOURCES})
+target_link_libraries(${PROJECT} ${SDL_LIBRARY})
+
+
+
