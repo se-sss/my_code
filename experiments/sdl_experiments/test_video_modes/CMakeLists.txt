@@ -1,6 +1,6 @@
 cmake_minimum_required (VERSION 2.6)
 
-set (PROJECT sdl_experiment)
+set (PROJECT test_video_modes)
 project (${PROJECT})
 
 find_package(SDL REQUIRED)
@@ -24,7 +24,7 @@ endif ()
 #	hello.h)
 
 set (SOURCES
-	../placeholder.cpp)
+	./test_video_modes.cpp)
 
 
 add_executable (${PROJECT} ${HEADERS} ${SOURCES})
