@@ -96,7 +96,7 @@ void drawPixel(SDL_Surface * screen, int x, int y, Uint8 r, Uint8 g, Uint8 b)
         *((Uint32 *) pixel) = color;
         break;
       default:
-        fprintf(stderr, "Unexpected bpp: \n", screen->format->BitsPerPixel);
+        fprintf(stderr, "Unexpected bpp: %d\n", screen->format->BitsPerPixel);
     }
   }
 
@@ -122,6 +122,13 @@ int main(int argc, char *argv[])
     printf("  %d x %d\n", modes[i]->w, modes[i]->h);
   }
 
+//  const int availableSDLDrivers =  SDL_GetNumVideoDrivers();
+//  printf("Available SDL drivers: %d\n", availableSDLDrivers);
+//  for(int i = 0; i <availableSDLDrivers; ++i)
+//  {
+//      printf("%d) %s\n", i + 1, SDL_GetVideoDriver(i));
+//  }
+
 //  change_display_frequency(60);
 //  SDL_Delay(10000);
 //  change_display_frequency(75);
@@ -141,6 +148,7 @@ for (int vid_mode = 0; modes[vid_mode]; ++vid_mode)
   }
 
 printf("BytesPerPixel: %d\n", screen->format->BytesPerPixel);
+printf("  %d x %d\n", modes[vid_mode]->w, modes[vid_mode]->h);
 
 //  print_device_caps();
 //  init_hires_timer();
@@ -164,8 +172,8 @@ printf("BytesPerPixel: %d\n", screen->format->BytesPerPixel);
     int R = fmin(screen->w, screen->h) / 2;
     int xC = screen->w / 2;
     int yC = screen->h / 2;
-    for (int i = 1; i < 2; ++i)
-      for (int j = 1; j < 2; ++j)
+    for (int i = 1; i < 25; ++i)
+      for (int j = 1; j < 25; ++j)
       {
 
         memset(screen->pixels, 0,
